@@ -87,11 +87,17 @@ func (self *Digest) GetRespUnAuth(url string) *http.Response {
 
 	request, err := http.NewRequest("GET", self.URL, nil)
 
+	timeout := time.Duration(10 * time.Second)
+
+	client := http.Client{
+		Timeout: timeout,
+	}
+
 	if err != nil {
 		log.Println(err)
 	}
 
-	response, err := http.DefaultClient.Do(request)
+	response, err := client.Do(request)
 
 	if err != nil {
 		log.Println(err)
